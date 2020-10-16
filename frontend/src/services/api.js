@@ -1,7 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
+import url from "./url";
 
-const api = axios.create({
-  baseURL: 'http://localhost:8000/'
-})
-
-export default api;
+let instance = axios.create({
+    baseURL: url.API_BASE_URL
+});

@@ -13,6 +13,8 @@ import axios from 'axios';
 
 import { useParams } from 'react-router-dom';
 
+import { isDev } from '../services/url'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -29,13 +31,15 @@ export default function Review() {
   const classes = useStyles();
 
   const [data, setData] = React.useState([]);
-  const [ review, setReview ] = React.useState([]);
+  const [review, setReview] = React.useState([]);
 
   const gameId = useParams();
 
+  const url = isDev ? `http://localhost:8000/games?id=${gameId}` : `games?id${gameId}`;
+
   useEffect((props) => {
     const fetchGameId = async () => {
-      const response = await axios(`http://localhost:8000/games?id=${gameId}`);
+      const response = await axios(url);
       setData(response.data);
     };
     fetchGameId();
@@ -46,8 +50,11 @@ export default function Review() {
     'Access-Control-Allow-Origin': '*',
   };
 
+  const urlRev = isDev ? `http://localhost:8000/rev/` : `rev`;
+
+
   useEffect(() => {
-    axios.get('http://localhost:8000/rev/', headers)
+    axios.get(urlRev, headers)
       .then(res => {
         setReview(res.data);
       })
@@ -55,19 +62,19 @@ export default function Review() {
   },
     []);
 
-  const rev = review.filter(function(item){
-    return item.game===parseInt(gameId.id);
+  const rev = review.filter(function (item) {
+    return item.game === parseInt(gameId.id);
   });
 
   return (
     <div className={classes.root}>
-      <div>
+      {/* <div>
         <Avatar>A</Avatar>
-      </div>
+      </div> */}
       <div className={classes.reviewDetail}>
-        <Typography>
+        <Typography variant='h6'>
           Review by {rev.map(a => a.name)[0]}
-            </Typography>
+        </Typography>
         <Typography variant='subtitle2'>
           {rev.map(a => a.detail)[0]}
         </Typography>

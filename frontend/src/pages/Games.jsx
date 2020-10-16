@@ -18,6 +18,10 @@ import {
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
+  containerDiv: {
+    display:'flex',
+    alignContent: 'center',
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -25,11 +29,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   image: {
+    display: 'flex',
     width: "240px",
     height: "345px",
+    alignItems: 'center'
   },
   imageBox: {
     alignItems: 'center',
+    display: 'flex',
   },
   rating: {
     display: 'flex',
@@ -105,9 +112,9 @@ export default function Games() {
   return (
     <div>
       <AppBar />
-      <div>
+      <div className={classes.containerDiv}>
         <Container maxWidth="sm">
-          <div>
+          <div >
             <Typography align='center' variant='h3'>
               {data.name} <br />
               {year} <br /> 
@@ -167,4 +174,3 @@ export default function Games() {
     </div>
   );
 }
-

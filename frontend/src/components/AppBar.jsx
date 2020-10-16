@@ -15,7 +15,8 @@ import {
   Switch,
   Route,
   Link,
-  Redirect
+  Redirect,
+  useHistory
 } from 'react-router-dom';
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -76,18 +77,20 @@ export default function ButtonAppBar() {
 
   const classes = useStyles();
 
-  const [search, setSearch] = React.useState([{search: ''}]);
+  const [search, setSearch] = React.useState('');
+
+  const history = useHistory();
 
   const handleChange = (event) => {
-    setSearch({ ...search, detail: event.target.value });
+    setSearch(event.target.value);
+    if (/\n/.test(event.target.value)) {
+    }
   }
 
   function submitSearch(event) {
-    event.preventDefault();
-
+    event.preventDefault()
+    history.push("/search/" + search);
   }
-
-  console.log(search)
 
   return (
     <div className={classes.root}>
@@ -98,9 +101,8 @@ export default function ButtonAppBar() {
             </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <SearchIcon />
             </div>
-            {/* <Redirect to={'/search/' + search.value}> */}
+            <form onSubmit={submitSearch}>
               <InputBase
                 placeholder="Search…"
                 classes={{
@@ -108,10 +110,11 @@ export default function ButtonAppBar() {
                   input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
+                // onChange={(event) =>{ handleChange(event); console.log('onchange handlechange',) } }
                 onChange={handleChange}
-                value={search.value}
+                value={search}
               />
-            {/* </Redirect> */}
+            </form>
           </div>
         </Toolbar>
       </AppBar>

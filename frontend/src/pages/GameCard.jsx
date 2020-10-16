@@ -33,7 +33,7 @@ export default function GameCard() {
   const [year, setYear] = React.useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/games?id=')
+    axios.get('http://localhost:8000/games?id=' + 116667)
       .then(res => {
         setData(res.data.data[0]);
         setCover(res.data.cover[0]);

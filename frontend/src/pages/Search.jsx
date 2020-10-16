@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
 export default function Search() {
 
   const classes = useStyles();
@@ -45,12 +46,12 @@ export default function Search() {
   const [data, setData] = React.useState([]);
   const [cover, setCover] = React.useState([]);
   const [year, setYear] = React.useState([]);
-  const  search = useParams();
+  const search = useParams();
 
   const axios = require('axios').default;
 
   useEffect((props) => {
-    
+
     const fetchSearch = async () => {
       const response = await axios(`http://localhost:8000/search?search=${search}`);
       setData(response.data);
@@ -80,21 +81,8 @@ export default function Search() {
         <Container maxWidth="sm">
           <div>
             <Typography align='center' variant='h3'>
-            Search result for {search.search}
+              Search result for {search.search}
             </Typography>
-            <Typography align='center' variant='h3'>
-              {data.name} <br />
-              {year} <br /> 
-              {/* by Company */}
-          </Typography>
-            <div className={classes.imageBox}>
-              <CardMedia
-                className={classes.image}
-                component="img"
-                image={cover.url}
-              />
-            </div>
-            
           </div>
         </Container>
       </div>
